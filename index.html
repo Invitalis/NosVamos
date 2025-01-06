@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Countdown to Cartagena! 🏖️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: url('playa.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .countdown-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 12px;
+            min-width: 100px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .countdown-number {
+            font-size: 2.5em;
+            font-weight: 600;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+
+        .countdown-label {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .destination {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-top: 20px;
+            font-weight: 400;
+        }
+
+        .emoji-row {
+            font-size: 1.5em;
+            margin: 15px 0;
+            animation: wave 2s infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        .airplane {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            animation: fly 20s linear infinite;
+            z-index: 2;
+            filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes fly {
+            0% {
+                transform: translate(-50vw, 20vh) rotate(45deg);
+            }
+            25% {
+                transform: translate(0vw, -20vh) rotate(45deg);
+            }
+            50% {
+                transform: translate(50vw, 20vh) rotate(45deg);
+            }
+            75% {
+                transform: translate(0vw, 60vh) rotate(45deg);
+            }
+            100% {
+                transform: translate(-50vw, 20vh) rotate(45deg);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .countdown-wrapper {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .countdown-item {
+                min-width: 80px;
+                padding: 10px;
+            }
+
+            .countdown-number {
+                font-size: 2em;
+            }
+
+            .title {
+                font-size: 1.5em;
+            }
+
+            .destination {
+                font-size: 1.2em;
+            }
+
+            .emoji-row {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <svg class="airplane" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff">
+        <path d="M22,16v-2l-8.5-5V3.5C13.5,2.67,12.83,2,12,2s-1.5,0.67-1.5,1.5V9L2,14v2l8.5-2.5V19L8,20.5V22l4-1l4,1v-1.5L13.5,19 v-5.5L22,16z"/>
+    </svg>
+
+    <div class="container">
+        <h1 class="title">La espera ya casi termina 🌴</h1>
+        <div class="emoji-row">
+            🏖️ 🌊 🌴 ⛱️ 🏝️
+        </div>
+        <div class="countdown-wrapper">
+            <div class="countdown-item">
+                <span id="days" class="countdown-number">00</span>
+                <span class="countdown-label">Días</span>
+            </div>
+            <div class="countdown-item">
+                <span id="hours" class="countdown-number">00</span>
+                <span class="countdown-label">Horas</span>
+            </div>
+            <div class="countdown-item">
+                <span id="minutes" class="countdown-number">00</span>
+                <span class="countdown-label">Minutos</span>
+            </div>
+            <div class="countdown-item">
+                <span id="seconds" class="countdown-number">00</span>
+                <span class="countdown-label">Segundos</span>
+            </div>
+        </div>
+        <h2 class="destination">¡Nos vamos a Cartagena! 😎 🏖️ 🌴</h2>
+        <div class="emoji-row">
+            🌺 🐠 🐚 🌊 🌞
+        </div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const targetDate = new Date('December 25, 2025 00:00:00').getTime();
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+
+            if (difference < 0) {
+                document.getElementById('countdown').innerHTML = '¡Ya llegó el día!';
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
